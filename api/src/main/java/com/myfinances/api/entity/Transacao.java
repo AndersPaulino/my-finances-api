@@ -1,9 +1,6 @@
 package com.myfinances.api.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,11 +11,11 @@ import java.time.LocalDate;
 @Table(name = "tb_transacao", schema = "public")
 @Getter @Setter
 public class Transacao extends AbstractEntity{
-
+    @Column(name = "cl_descricao", length = 255)
     private String descricao;
-
+    @Column(name = "cl_valor")
     private BigDecimal valor;
-
+    @Column(name = "cl_dia_transacao")
     private LocalDate dia;
 
     @ManyToOne
