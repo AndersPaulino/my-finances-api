@@ -4,6 +4,7 @@ import com.myfinances.api.entity.Transacao;
 import com.myfinances.api.repository.CategoriaRepository;
 import com.myfinances.api.repository.TransacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,5 +37,10 @@ public class TransacaoService {
     @Transactional(readOnly = true)
     public List<Transacao> findByDiaRegistro(LocalDate registro){
         return transacaoRepository.findByDiaRegistro(registro);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Transacao> findaByDiaAtualizar(LocalDate atualizar){
+        return transacaoRepository.findByDiaAtualizar(atualizar);
     }
 }
