@@ -1,0 +1,25 @@
+package com.myfinances.api.service;
+
+import com.myfinances.api.entity.Categoria;
+import com.myfinances.api.repository.CategoriaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
+
+@Service
+public class CategoriaService {
+
+    private CategoriaRepository categoriaRepository;
+
+    @Autowired
+    public CategoriaService(CategoriaRepository categoriaRepository){
+        this.categoriaRepository = categoriaRepository;
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<Categoria> findById(Long id){
+        return categoriaRepository.findById(id);
+    }
+}
