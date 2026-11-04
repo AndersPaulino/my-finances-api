@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,5 +27,10 @@ public class CategoriaService {
     @Transactional(readOnly = true)
     public Categoria findByNomeCategoria(String nomeCategoria){
         return categoriaRepository.findByNomeCategoria(nomeCategoria);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Categoria> findByAtivo(boolean ativo){
+        return categoriaRepository.findByAtivo(ativo);
     }
 }
