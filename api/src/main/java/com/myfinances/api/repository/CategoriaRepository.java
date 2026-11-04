@@ -1,6 +1,7 @@
 package com.myfinances.api.repository;
 
 import com.myfinances.api.entity.Categoria;
+import org.springframework.cglib.core.Local;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -20,5 +21,8 @@ public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
 
     @Query("SELECT e FROM Categoria e WHERE e.registro = :registro")
     List<Categoria> findByDiaRegistro(@Param("registro")LocalDate registro);
+
+    @Query("SELECT e FROM Categoria e WHERE e.atualizar = :atualizar")
+    List<Categoria> findByDiaAtualizar(@Param("atualziar")LocalDate atualizar);
 
 }
