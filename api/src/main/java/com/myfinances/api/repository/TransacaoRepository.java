@@ -1,5 +1,6 @@
 package com.myfinances.api.repository;
 
+import com.myfinances.api.entity.TipoTransacao;
 import com.myfinances.api.entity.Transacao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,5 +20,8 @@ public interface TransacaoRepository extends JpaRepository<Transacao, Long> {
 
     @Query("SELECT e FROM Transacao e WHERE e.atualizar = :atualizar")
     List<Transacao> findByDiaAtualizar(@Param("atualziar")LocalDate atualizar);
+
+    @Query("SELECT e FROM Transacao e WHERE e.tipo = :tipo")
+    List<Transacao> findByTipoTransacao(@Param("tipo")TipoTransacao tipo);
 
 }
