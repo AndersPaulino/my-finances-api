@@ -24,5 +24,4 @@ public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
 
     @Query("SELECT e FROM Categoria e WHERE e.atualizar = :atualizar")
     List<Categoria> findByDiaAtualizar(@Param("atualziar")LocalDate atualizar);
-
 }
