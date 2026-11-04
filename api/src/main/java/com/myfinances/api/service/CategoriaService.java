@@ -26,6 +26,11 @@ public class CategoriaService {
     }
 
     @Transactional(readOnly = true)
+    public List<Categoria> findAll(){
+        return categoriaRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
     public Categoria findByNomeCategoria(String nomeCategoria){
         return categoriaRepository.findByNomeCategoria(nomeCategoria);
     }

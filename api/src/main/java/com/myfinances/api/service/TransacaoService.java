@@ -32,6 +32,10 @@ public class TransacaoService {
     }
 
     @Transactional(readOnly = true)
+    public List<Transacao> findAll(){
+        return transacaoRepository.findAll();
+    }
+    @Transactional(readOnly = true)
     public List<Transacao> findByAtivo(boolean ativo){
         return transacaoRepository.findByAtivo(ativo);
     }
