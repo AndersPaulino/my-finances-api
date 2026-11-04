@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -62,6 +63,20 @@ public class CategoriaController {
                 return ResponseEntity.notFound().build();
             }
         } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/registro/{registro}")
+    public ResponseEntity<List<Categoria>> findByDiaRegistro(@PathVariable LocalDate registro){
+        try {
+            List<Categoria> categorias = categoriaService.findByDiaRegistro(registro);
+            if (!categorias.isEmpty()){
+                return ResponseEntity.ok(categorias);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
