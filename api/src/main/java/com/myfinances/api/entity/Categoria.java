@@ -14,7 +14,4 @@ public class Categoria extends AbstractEntity{
     @Getter @Setter
     @Column(name = "cl_descricao",length = 255)
     private String descricao;
-
-    @Enumerated(EnumType.STRING)
-    private TipoTransacao tipo;
 }
