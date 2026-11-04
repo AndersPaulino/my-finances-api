@@ -24,4 +24,8 @@ public interface TransacaoRepository extends JpaRepository<Transacao, Long> {
     @Query("SELECT e FROM Transacao e WHERE e.tipo = :tipo")
     List<Transacao> findByTipoTransacao(@Param("tipo")TipoTransacao tipo);
 
+    @Query("SELECT e FROM Transacao e WHERE e.dia = :dia")
+    List<Transacao> findByDia(@Param("dia")LocalDate dia);
+
+
 }
