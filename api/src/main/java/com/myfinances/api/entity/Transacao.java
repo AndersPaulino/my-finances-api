@@ -17,10 +17,8 @@ public class Transacao extends AbstractEntity{
     private BigDecimal valor;
     @Column(name = "cl_dia_transacao")
     private LocalDate dia;
-
     @Enumerated(EnumType.STRING)
     private TipoTransacao tipo;
-
     @ManyToOne
     @JoinColumn(name = "cl_categoria_id")
     private Categoria categoria;
