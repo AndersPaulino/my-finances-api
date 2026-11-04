@@ -6,10 +6,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
 
     @Query("SELECT e FROM Categoria e WHERE e.nomeCategoria = :nomeCategoria")
     Categoria findByNomeCategoria(@Param("nomeCategoria") String nomeCategoria);
+
+    @Query("SELECT e FROM Categoria e WHERE e.ativo = :ativo")
+    List<Categoria> findByAtivo(@Param("ativo") boolean ativo);
 
 }
