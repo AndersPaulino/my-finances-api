@@ -39,4 +39,9 @@ public class CategoriaService {
     public List<Categoria> findByDiaRegistro(LocalDate registro){
         return categoriaRepository.findByDiaRegistro(registro);
     }
+
+    @Transactional(readOnly = true)
+    public List<Categoria> findByDiaAtualziar(LocalDate atualziar){
+        return categoriaRepository.findByDiaAtualizar(atualziar);
+    }
 }
