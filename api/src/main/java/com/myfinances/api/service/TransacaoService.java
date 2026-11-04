@@ -49,4 +49,9 @@ public class TransacaoService {
     public List<Transacao> findByTipoTransacao(TipoTransacao tipo){
         return transacaoRepository.findByTipoTransacao(tipo);
     }
+
+    @Transactional(readOnly = true)
+    public List<Transacao> findByDia(LocalDate dia){
+        return transacaoRepository.findByDia(dia);
+    }
 }
