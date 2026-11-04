@@ -6,11 +6,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
 public interface TransacaoRepository extends JpaRepository<Transacao, Long> {
     @Query("SELECT e FROM Transacao e WHERE e.ativo = :ativo")
     List<Transacao> findByAtivo(@Param("ativo")boolean ativo);
+
+    @Query("SELECT e FROM Transacao e WHERE e.registro = :registro")
+    List<Transacao> findByDiaRegistro(@Param("registro")LocalDate registro);
 
 }
