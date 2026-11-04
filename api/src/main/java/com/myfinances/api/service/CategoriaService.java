@@ -22,4 +22,9 @@ public class CategoriaService {
     public Optional<Categoria> findById(Long id){
         return categoriaRepository.findById(id);
     }
+
+    @Transactional(readOnly = true)
+    public Categoria findByNomeCategoria(String nomeCategoria){
+        return categoriaRepository.findByNomeCategoria(nomeCategoria);
+    }
 }
