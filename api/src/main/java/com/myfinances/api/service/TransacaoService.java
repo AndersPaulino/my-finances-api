@@ -1,5 +1,6 @@
 package com.myfinances.api.service;
 
+import com.myfinances.api.entity.TipoTransacao;
 import com.myfinances.api.entity.Transacao;
 import com.myfinances.api.repository.CategoriaRepository;
 import com.myfinances.api.repository.TransacaoRepository;
@@ -42,5 +43,10 @@ public class TransacaoService {
     @Transactional(readOnly = true)
     public List<Transacao> findaByDiaAtualizar(LocalDate atualizar){
         return transacaoRepository.findByDiaAtualizar(atualizar);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Transacao> findByTipoTransacao(TipoTransacao tipo){
+        return transacaoRepository.findByTipoTransacao(tipo);
     }
 }
