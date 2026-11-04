@@ -51,4 +51,18 @@ public class CategoriaController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    @GetMapping("/ativo/{ativo}")
+    public ResponseEntity<List<Categoria>> findByAtivo(@PathVariable boolean ativo){
+        try {
+            List<Categoria> categorias = categoriaService.findByAtivo(ativo);
+            if (!categorias.isEmpty()){
+                return ResponseEntity.ok(categorias);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }
