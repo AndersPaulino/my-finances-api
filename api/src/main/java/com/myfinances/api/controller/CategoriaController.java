@@ -80,4 +80,18 @@ public class CategoriaController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    @GetMapping("/atualizar/{atualizar}")
+    public ResponseEntity<List<Categoria>> findByDiaAtualizar(@PathVariable LocalDate atualizar){
+        try {
+            List<Categoria> categorias = categoriaService.findByDiaAtualziar(atualizar);
+            if (!categorias.isEmpty()){
+                return ResponseEntity.ok(categorias);
+            } else {
+                return  ResponseEntity.notFound().build();
+            }
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }
