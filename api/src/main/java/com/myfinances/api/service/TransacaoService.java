@@ -9,6 +9,7 @@ import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -53,5 +54,10 @@ public class TransacaoService {
     @Transactional(readOnly = true)
     public List<Transacao> findByDia(LocalDate dia){
         return transacaoRepository.findByDia(dia);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Transacao> findByValor(BigDecimal valor){
+        return transacaoRepository.findByValor(valor);
     }
 }

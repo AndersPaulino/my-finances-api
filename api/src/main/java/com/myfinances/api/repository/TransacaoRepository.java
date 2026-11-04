@@ -29,7 +29,7 @@ public interface TransacaoRepository extends JpaRepository<Transacao, Long> {
     List<Transacao> findByDia(@Param("dia")LocalDate dia);
 
     @Query("SELECT e FROM Transacao e WHERE e.valor = :valor")
-    List<Transacao> fiindByValor(@Param("valor")BigDecimal valor);
+    List<Transacao> findByValor(@Param("valor")BigDecimal valor);
 
 
 }
