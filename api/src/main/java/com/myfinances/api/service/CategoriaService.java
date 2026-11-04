@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.net.PortUnreachableException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -48,5 +49,10 @@ public class CategoriaService {
     @Transactional(readOnly = true)
     public List<Categoria> findByDiaAtualziar(LocalDate atualziar){
         return categoriaRepository.findByDiaAtualizar(atualziar);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void cadastar(Categoria categoria){
+        categoriaRepository.save(categoria);
     }
 }
