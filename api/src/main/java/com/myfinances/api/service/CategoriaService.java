@@ -55,4 +55,25 @@ public class CategoriaService {
     public void cadastar(Categoria categoria){
         categoriaRepository.save(categoria);
     }
+
+    @Transactional(readOnly = true)
+    public void atualizar(Long id, Categoria categoria) {
+        Optional<Categoria> categoria1 = categoriaRepository.findById(id);
+
+        if (categoria1.isPresent()){
+            Categoria categoria2 = categoria1.get();
+
+            if (categoria.getDescricao() != null){
+                categoria2.setDescricao(categoria.getDescricao());
+            }
+            if (categoria.getNomeCategoria() != null){
+                categoria2.setNomeCategoria(categoria.getNomeCategoria());
+            }
+            categoria2.setAtualizar(LocalDate.now());
+
+            categoriaRepository.save(categoria2);
+        } else {
+            throw new IllegalArgumentException("ID de categoria inválido!");
+        }
+    }
 }
