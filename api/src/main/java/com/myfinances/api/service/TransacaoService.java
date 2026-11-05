@@ -99,4 +99,17 @@ public class TransacaoService {
             throw new IllegalArgumentException("ID de transacao inválido");
         }
     }
+
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
+    public void deletar(Long id) {
+        Optional<Transacao> transacao1 = transacaoRepository.findById(id);
+
+        if (transacao1.isPresent()) {
+            Transacao transacao = transacao1.get();
+            transacao.setAtivo(false);
+            transacao.setAtualizar(LocalDate.now());
+        } else {
+            throw new IllegalArgumentException("ID de Transacao inválido!");
+        }
+    }
 }
