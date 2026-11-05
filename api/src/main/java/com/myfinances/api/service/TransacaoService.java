@@ -64,4 +64,9 @@ public class TransacaoService {
     public List<Transacao> findByValor(BigDecimal valor){
         return transacaoRepository.findByValor(valor);
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void  cadastrar(Transacao transacao) {
+        transacaoRepository.save(transacao);
+    }
 }
