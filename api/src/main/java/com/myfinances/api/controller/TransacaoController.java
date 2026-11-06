@@ -2,13 +2,17 @@ package com.myfinances.api.controller;
 
 import com.myfinances.api.entity.TipoTransacao;
 import com.myfinances.api.entity.Transacao;
+import com.myfinances.api.service.GerarRelatorioService;
 import com.myfinances.api.service.TransacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -16,11 +20,31 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/transacao")
 public class TransacaoController {
-    private TransacaoService transacaoService;
+    private final TransacaoService transacaoService;
+    private final GerarRelatorioService gerarRelatorioService;
 
     @Autowired
-    public TransacaoController(TransacaoService transacaoService){
+    public TransacaoController(TransacaoService transacaoService, GerarRelatorioService gerarRelatorioService){
         this.transacaoService = transacaoService;
+        this.gerarRelatorioService = gerarRelatorioService;
+    }
+    @GetMapping("/relatorio/excel")
+    public ResponseEntity<byte[]> gerarRelatorioExcel() {
+
+        try {
+            byte[] arquivo = gerarRelatorioService.gerarRelatorio();
+
+            return ResponseEntity.ok()
+                    .header(
+                            HttpHeaders.CONTENT_DISPOSITION,
+                            "attachment; filename=relatorio_tarefas.xlsx"
+                    )
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .body(arquivo);
+
+        } catch (IOException e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @GetMapping("/{id}")
