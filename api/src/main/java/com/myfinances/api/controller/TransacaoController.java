@@ -93,4 +93,18 @@ public class TransacaoController {
            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
        }
     }
+    @GetMapping("/dia/{dia}")
+    public ResponseEntity<List<Transacao>> findByDia(@PathVariable LocalDate dia){
+        try {
+            List<Transacao> transacaos = transacaoService.findByDia(dia);
+            if (!transacaos.isEmpty()){
+                return ResponseEntity.ok(transacaos);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
 }
