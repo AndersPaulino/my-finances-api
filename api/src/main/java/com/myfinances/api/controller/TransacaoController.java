@@ -140,4 +140,16 @@ public class TransacaoController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao atualziar o registro!");
         }
     }
+
+    @DeleteMapping("/desativar/{id}")
+    public ResponseEntity<String> deletar(@PathVariable Long id){
+        try {
+            transacaoService.deletar(id);
+            return ResponseEntity.ok().body("Registro desativado com sucesso!");
+        } catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().body("Registro desativado com sucesso!");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao desativar o registro!");
+        }
+    }
 }
