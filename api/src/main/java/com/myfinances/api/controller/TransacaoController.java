@@ -3,6 +3,7 @@ package com.myfinances.api.controller;
 import com.myfinances.api.entity.Transacao;
 import com.myfinances.api.service.TransacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,6 +55,20 @@ public class TransacaoController {
     public ResponseEntity<List<Transacao>> findByDiaRegistro(@PathVariable LocalDate registro){
         try {
             List<Transacao> transacaos = transacaoService.findByDiaRegistro(registro);
+            if (!transacaos.isEmpty()){
+                return ResponseEntity.ok(transacaos);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/atualizar/{atualizar}")
+    public ResponseEntity<List<Transacao>> findByDiaAtualizar(@PathVariable LocalDate atualizar){
+        try {
+            List<Transacao> transacaos = transacaoService.findaByDiaAtualizar(atualizar);
             if (!transacaos.isEmpty()){
                 return ResponseEntity.ok(transacaos);
             } else {
