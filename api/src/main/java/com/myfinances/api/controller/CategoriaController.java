@@ -7,11 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -63,6 +61,68 @@ public class CategoriaController {
             }
         } catch (Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/registro/{registro}")
+    public ResponseEntity<List<Categoria>> findByDiaRegistro(@PathVariable LocalDate registro){
+        try {
+            List<Categoria> categorias = categoriaService.findByDiaRegistro(registro);
+            if (!categorias.isEmpty()){
+                return ResponseEntity.ok(categorias);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/atualizar/{atualizar}")
+    public ResponseEntity<List<Categoria>> findByDiaAtualizar(@PathVariable LocalDate atualizar){
+        try {
+            List<Categoria> categorias = categoriaService.findByDiaAtualziar(atualizar);
+            if (!categorias.isEmpty()){
+                return ResponseEntity.ok(categorias);
+            } else {
+                return  ResponseEntity.notFound().build();
+            }
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<String> cadastrar (@RequestBody Categoria categoria){
+        try {
+            categoriaService.cadastar(categoria);
+            return ResponseEntity.ok().body("Registro cadastrado com sucesso!");
+        } catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/atualizar/{id}")
+    public ResponseEntity<String> atualizar(@PathVariable Long id, @RequestBody Categoria categoria) {
+        try {
+            categoriaService.atualizar(id, categoria);
+            return ResponseEntity.ok().body("Registro atualizado com sucesso!");
+        } catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao atualizar o registro!");
+        }
+    }
+
+    @DeleteMapping("/desativar/{id}")
+    public ResponseEntity<String> deletar(@PathVariable Long id){
+        try {
+            categoriaService.deletar(id);
+            return ResponseEntity.ok().body("Registro desativado com sucesso!");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao desativar o registro!");
         }
     }
 }

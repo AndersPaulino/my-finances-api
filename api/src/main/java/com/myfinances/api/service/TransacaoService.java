@@ -7,6 +7,7 @@ import com.myfinances.api.repository.TransacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
@@ -63,5 +64,52 @@ public class TransacaoService {
     @Transactional(readOnly = true)
     public List<Transacao> findByValor(BigDecimal valor){
         return transacaoRepository.findByValor(valor);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void  cadastrar(Transacao transacao) {
+        transacaoRepository.save(transacao);
+    }
+
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
+    public void atualizar(Long id, Transacao transacao){
+        Optional<Transacao> transacao1 = transacaoRepository.findById(id);
+
+        if (transacao1.isPresent()){
+            Transacao transacao2 = transacao1.get();
+
+            if (transacao.getCategoria() != null){
+                transacao2.setCategoria(transacao.getCategoria());
+            }
+            if (transacao.getDescricao() != null){
+                transacao2.setDescricao(transacao.getDescricao());
+            }
+            if (transacao.getDia() != null){
+                transacao2.setDia(transacao.getDia());
+            }
+            if (transacao.getTipo() != null){
+                transacao2.setTipo(transacao.getTipo());
+            }
+            if (transacao.getValor() != null) {
+                transacao2.setValor(transacao.getValor());
+            }
+            transacao2.setAtualizar(LocalDate.now());
+            transacaoRepository.save(transacao2);
+        } else {
+            throw new IllegalArgumentException("ID de transacao inválido");
+        }
+    }
+
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
+    public void deletar(Long id) {
+        Optional<Transacao> transacao1 = transacaoRepository.findById(id);
+
+        if (transacao1.isPresent()) {
+            Transacao transacao = transacao1.get();
+            transacao.setAtivo(false);
+            transacao.setAtualizar(LocalDate.now());
+        } else {
+            throw new IllegalArgumentException("ID de Transacao inválido!");
+        }
     }
 }
