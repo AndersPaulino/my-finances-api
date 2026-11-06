@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -103,6 +104,20 @@ public class TransacaoController {
                 return ResponseEntity.notFound().build();
             }
         } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/valor/{valor}")
+    public ResponseEntity<List<Transacao>> findByValor(@PathVariable BigDecimal valor) {
+        try {
+            List<Transacao> transacaos = transacaoService.findByValor(valor);
+            if (!transacaos.isEmpty()){
+                return ResponseEntity.ok(transacaos);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
