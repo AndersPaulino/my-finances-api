@@ -36,7 +36,7 @@ public class TransacaoController {
         return ResponseEntity.ok(transacaos);
     }
 
-    @GetMapping("/ativo/{ativo")
+    @GetMapping("/ativo/{ativo}")
     public ResponseEntity<List<Transacao>> findByAtivo(@PathVariable boolean ativo){
         try {
             List<Transacao> transacaos = transacaoService.findByAtivo(ativo);
