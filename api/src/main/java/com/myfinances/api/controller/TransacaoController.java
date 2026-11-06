@@ -120,12 +120,24 @@ public class TransacaoController {
     }
 
     @PostMapping
-    public ResponseEntity<String> cadastrar (@RequestMapping Transacao transacao){
+    public ResponseEntity<String> cadastrar (@PathVariable Transacao transacao){
         try {
             transacaoService.cadastrar(transacao);
             return ResponseEntity.ok().body("Registro cadastrado com sucesso!");
         } catch (IllegalArgumentException e){
             return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/atualizar/{id}")
+    public ResponseEntity<String> atualizar(@PathVariable Long id, @RequestBody Transacao transacao){
+        try {
+            transacaoService.atualizar(id, transacao);
+            return ResponseEntity.ok().body("Registro atualziado com sucesso!");
+        } catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao atualziar o registro!");
         }
     }
 }
