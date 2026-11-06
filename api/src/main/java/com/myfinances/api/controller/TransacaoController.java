@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -39,6 +40,20 @@ public class TransacaoController {
     public ResponseEntity<List<Transacao>> findByAtivo(@PathVariable boolean ativo){
         try {
             List<Transacao> transacaos = transacaoService.findByAtivo(ativo);
+            if (!transacaos.isEmpty()){
+                return ResponseEntity.ok(transacaos);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/registro/{registro}")
+    public ResponseEntity<List<Transacao>> findByDiaRegistro(@PathVariable LocalDate registro){
+        try {
+            List<Transacao> transacaos = transacaoService.findByDiaRegistro(registro);
             if (!transacaos.isEmpty()){
                 return ResponseEntity.ok(transacaos);
             } else {
