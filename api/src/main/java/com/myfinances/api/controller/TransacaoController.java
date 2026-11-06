@@ -1,5 +1,6 @@
 package com.myfinances.api.controller;
 
+import com.myfinances.api.entity.TipoTransacao;
 import com.myfinances.api.entity.Transacao;
 import com.myfinances.api.service.TransacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,5 +78,19 @@ public class TransacaoController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    }
+
+    @GetMapping("/tipo/{tipo}")
+    public ResponseEntity<List<Transacao>> findByTipoTransacao(@PathVariable TipoTransacao tipo){
+       try {
+           List<Transacao> transacaos = transacaoService.findByTipoTransacao(tipo);
+           if (!transacaos.isEmpty()) {
+                return ResponseEntity.ok(transacaos);
+           } else {
+               return ResponseEntity.notFound().build();
+           }
+       } catch (Exception e) {
+           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+       }
     }
 }
